@@ -1,20 +1,24 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpModule ,JsonpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
+import {WikipediaService} from "./wikipedia.service";
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SearchComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    JsonpModule,
   ],
-  providers: [],
+  providers: [WikipediaService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
