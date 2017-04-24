@@ -3,7 +3,8 @@ import {WikipediaService} from "../wikipedia.service";
 import {FormControl} from "@angular/forms";
 import "rxjs/add/operator/debounceTime";
 import "rxjs/add/operator/distinctUntilChanged";
-import "rxjs/add/operator/mergeMap";
+import "rxjs/add/operator/switchMap";
+import {Observable} from 'rxjs/Rx';
 
 
 @Component({
@@ -12,10 +13,10 @@ import "rxjs/add/operator/mergeMap";
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
-  items:Array<string>;
+  items:Observable<Array<string>>;
   term = new FormControl();
   constructor(private wikipediaService: WikipediaService) {
-    this.term.valueChanges.debounceTime(400).distinctUntilChanged().mergeMap( term =>  this.wikipediaService.search(term) ).subscribe(items => this.items = items);
+    this.items = this.term.valueChanges.debounceTime(400).distinctUntilChanged().switchMap( term =>  this.wikipediaService.search(term) );
   }
 
   ngOnInit() {
