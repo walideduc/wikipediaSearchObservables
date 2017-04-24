@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { URLSearchParams , Jsonp }  from '@angular/http';
-import 'rxjs/add/operator/toPromise';
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class WikipediaService {
@@ -8,6 +8,7 @@ export class WikipediaService {
   constructor(private jsonp: Jsonp) { }
 
   search(term: string){
+    console.log(term);
     var search = new URLSearchParams()
     search.set('action','opensearch');
     search.set('search',term);
@@ -15,8 +16,7 @@ export class WikipediaService {
 
     return this.jsonp
                 .get('http://en.wikipedia.org/w/api.php?callback=JSONP_CALLBACK',{search})
-                .toPromise()
-                .then((response) => response.json()[1]);
+                .map((response) => response.json()[1]);
 
 
   }
